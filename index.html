@@ -169,7 +169,7 @@ doc:function(){var k=S.doc,im=S.d.docs[k]||[],src=im[S.pg];
   +'<button class="dc'+(src?" on":"")+'" data-a="docimg" aria-label="Foto del documento">'+(src?'<img src="'+src+'" alt="'+esc(CFG.docs[k][0])+'">':'<span>'+ic("cam")+'<br>Agregar foto</span>')+'</button>'
   +'<div class="seg"><button data-a="pg:0" class="'+(S.pg?"hot":"")+'">'+ic("left")+'Anterior</button><button data-a="pg:1" class="'+(S.pg?"":"hot")+'">'+ic("right")+'Siguiente</button></div>'
 +'<button class="pill pink" data-a="share">'+ic("share")+' Compartir '+CFG.docs[k][2]+'</button>'
-+'<button class="pill dark" data-a="na">'+ic("down")+' Descargar PDF '+CFG.docs[k][2]+'</button>'
++'<button class="pill dark" data-a="pdf">'+ic("down")+' Descargar PDF '+CFG.docs[k][2]+'</button>'
 +'<button class="pill dark" data-a="go:wallet">'+ic("left")+' Regresar</button>'
 +'<button class="pill dark" data-a="reload">'+ic("ext")+' Recargar '+CFG.docs[k][2]+'</button></div>';},
 perfil:function(){return '<div class="center">'+av("big")+'<h1>'+esc(S.d.name)+'</h1><p class="muted">Cédula '+esc(S.ced)+'</p></div>'
@@ -220,6 +220,19 @@ document.addEventListener("click",function(e){
   else if(a=="share"){
     if(navigator.share){navigator.share({title:CFG.docs[S.doc][0],text:CFG.docs[S.doc][0]}).catch(function(){});}
     else toast("Compartir no está disponible en este navegador.");
+  }
+  else if(a=="pdf"){
+    var foto=S.d.docs[S.doc] && S.d.docs[S.doc][S.pg];
+
+    if(!foto){
+        toast("Primero agrega una foto.");
+        return;
+    }
+
+    var enlace=document.createElement("a");
+    enlace.href=foto;
+    enlace.download=CFG.docs[S.doc][2]+".jpg";
+    enlace.click();
   }
   else if(a=="reload"){render();toast("Actualizado.");}
   else if(a=="psave"){S.d.name=$("pn").value.trim()||S.d.name;S.d.bio=$("pb").value.trim();sv();render();toast("Cambios guardados.");}
