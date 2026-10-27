@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mi App</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap">
+<style>
+:root{--bg1:#5a00a8;--bg2:#2a0a5e;--bg3:#1a0a3a;--ink:#ffffff;--soft:#d9b8ff;--card:#150a2e;--line:#3a2468;--pink:#f3c4fb;--cream:#f5f4ec;--btn:#5a0fb0;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px);background:var(--bg3)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--ink);font-family:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:17px;line-height:1.35;background:linear-gradient(var(--bg1),var(--bg2) 55%,var(--bg3))}
+main{max-width:480px;margin:0 auto;padding:22px 20px 130px}
+button,input,textarea{font:inherit}
+button{cursor:pointer;border:0;color:inherit}
+:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+svg{width:1.3em;height:1.3em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+h1{font-size:2rem;font-weight:800;margin:0 0 6px;line-height:1.1}
+h2{font-size:1.9rem;font-weight:800;margin:0;line-height:1.1}
+.eyebrow{color:var(--soft);font-weight:600;font-size:.9rem;letter-spacing:.04em;text-transform:uppercase}
+.muted{color:var(--soft);opacity:.85}
+.top{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.top .grow{flex:1;min-width:0}
+.bell{position:relative;width:54px;height:54px;border-radius:50%;background:var(--card);display:grid;place-items:center}
+.bell i{position:absolute;top:6px;right:6px;background:#f28b82;color:#000;font:700 .7rem/1 inherit;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-style:normal}
+.av{width:56px;height:56px;border-radius:50%;background:var(--cream);color:#14213d;display:grid;place-items:center;overflow:hidden;flex:none;padding:0}
+.av img{width:100%;height:100%;object-fit:cover}
+.av.big{width:110px;height:110px;margin:0 auto 14px}
+.hero{background:rgba(255,255,255,.07);border-radius:24px;padding:22px;margin-bottom:24px}
+.hero h2{margin-top:6px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}
+.chip{background:#e7d9ff;color:#3b1275;border-radius:999px;padding:7px 14px;font-weight:700;font-size:.8rem;display:flex;gap:6px;align-items:center;text-transform:uppercase}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:26px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:16px 6px;display:flex;flex-direction:column;align-items:center;gap:10px;font-weight:700;font-size:.95rem}
+.tile span{width:54px;height:54px;border-radius:50%;background:var(--btn);display:grid;place-items:center}
+.tile svg{width:28px;height:28px}
+.news{width:100%;aspect-ratio:16/10;border-radius:22px;background:rgba(255,255,255,.07);border:2px dashed var(--line);display:grid;place-items:center;color:var(--soft);overflow:hidden;padding:0;font-weight:600}
+.news img{width:100%;height:100%;object-fit:cover}
+.pill{width:100%;border-radius:999px;padding:20px 26px;font-weight:800;text-align:center}
+.field{display:flex;align-items:center;gap:14px;background:var(--cream);color:#222;border-radius:999px;padding:0 26px;height:68px;margin-bottom:14px}
+.field input{flex:1;border:0;background:transparent;font-size:1.15rem;color:#222;min-width:0;height:100%}
+.field input:focus-visible{outline:none}
+.field:focus-within{outline:3px solid var(--pink)}
+.btn{background:var(--btn);color:#fff;box-shadow:0 8px 20px rgba(0,0,0,.25)}
+.pink{background:var(--pink);color:#2a0a5e}
+.dark{background:var(--card);color:var(--pink);border:1px solid var(--line)}
+.center{text-align:center}
+.link{background:none;color:var(--soft);font-weight:700;padding:6px}
+.err{color:#ffb4ab;font-weight:600;min-height:1.4em;text-align:center;margin:0 0 6px}
+.brand{height:250px;display:grid;place-items:center;font-size:2.4rem;font-weight:800;text-align:center;white-space: pre-line}
+.item{display:flex;align-items:center;gap:16px;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:26px;padding:20px;margin-bottom:14px}
+.item .ic{width:58px;height:58px;border-radius:18px;background:var(--cream);color:#3b1275;display:grid;place-items:center;flex:none}
+.item b{display:block;font-size:1.15rem}
+.item small{color:var(--soft);font-size:.95rem}
+.item .go{margin-left:auto;color:var(--soft)}
+.dc{width:100%;aspect-ratio:1.586;border-radius:20px;background:rgba(255,255,255,.07);border:2px dashed var(--line);display:grid;place-items:center;overflow:hidden;color:var(--soft);padding:0;font-weight:600;margin-bottom:16px}
+.dc.on{border:0;background:#fff}
+.dc img{width:100%;height:100%;object-fit:cover}
+.seg{display:flex;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px;margin-bottom:16px}
+.seg button{flex:1;border-radius:999px;padding:14px;font-weight:800;display:flex;justify-content:center;gap:8px;align-items:center;background:transparent;color:var(--soft)}
+.seg button.hot{background:var(--pink);color:#2a0a5e}
+.panel{background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:28px;padding:16px;display:grid;gap:12px}
+.panel .pill{display:flex;justify-content:center;gap:10px;align-items:center;padding:17px}
+label{display:block;font-weight:700;margin:14px 0 6px}
+textarea{width:100%;min-height:90px;border-radius:20px;border:0;background:var(--cream);color:#222;padding:16px}
+nav{position:fixed;left:12px;right:12px;bottom:0;max-width:456px;margin:0 auto;margin-bottom:12px;background:var(--card);border:1px solid var(--line);border-radius:999px;display:flex;justify-content:space-around;padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px))}
+nav button{width:62px;height:62px;border-radius:50%;background:transparent;color:var(--soft);display:grid;place-items:center}
+nav button.on{border:2px solid var(--soft);color:#fff;background:rgba(255,255,255,.1)}
+nav svg{width:28px;height:28px}
+#toast{position:fixed;left:50%;bottom:120px;transform:translateX(-50%);background:#fff;color:#2a0a5e;font-weight:700;padding:12px 18px;border-radius:999px;max-width:88%;text-align:center;opacity:0;pointer-events:none;transition:opacity .2s}
+#toast.show{opacity:1}
+@media (prefers-reduced-motion:reduce){#toast{transition:none}}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<div id="toast" role="status"></div>
+<script>
+(function(){
+/* ====== TEXTOS QUE PUEDES CAMBIAR ====== */
+var CFG={
+  app:"Data\n593",
+  etiqueta:"CUENTA CIUDADANA",
+  docs:{
+    cedula:["Cédula de identidad","Documento Institucional: DIGERCIC","cédula"],
+    votacion:["Certificado de votación","Documento Institucional: CNE","certificado"],
+    licencia:["Licencia de conducir","Documento Institucional: ANT","licencia"]
+  }
+};
+/* ======================================= */
+var P={
+home:'<path d="M3 11l9-8 9 8v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>',
+star:'<path d="M12 2l3 6.9 7.5.7-5.7 5 1.7 7.4L12 18l-6.5 4 1.7-7.4-5.7-5 7.5-.7z"/>',
+wallet:'<path d="M3 7a2 2 0 0 1 2-2h13v4"/><path d="M3 7v11a2 2 0 0 0 2 2h14a1 1 0 0 0 1-1v-9a1 1 0 0 0-1-1H5a2 2 0 0 1-2-2z"/><circle cx="16.5" cy="14.5" r="1"/>',
+check:'<circle cx="12" cy="12" r="10"/><path d="M8 12.5l3 3 5-6"/>',
+user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/>',
+bell:'<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/>',
+doc:'<path d="M6 2h9l5 5v15H6z"/><path d="M9 12h8M9 16h8M9 8h3"/>',
+share:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 10.6l6.8-4M8.6 13.4l6.8 4"/>',
+down:'<path d="M12 3v12M7 10l5 5 5-5M5 21h14"/>',
+left:'<path d="M19 12H5M11 6l-6 6 6 6"/>',
+right:'<path d="M9 6l6 6-6 6"/>',
+ext:'<path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>',
+cam:'<path d="M4 8h3l2-3h6l2 3h3v12H4z"/><circle cx="12" cy="13" r="3.5"/>'
+};
+function ic(n){return '<svg viewBox="0 0 24 24" aria-hidden="true">'+P[n]+'</svg>';}
+function esc(t){return String(t==null?"":t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+function $(i){return document.getElementById(i);}
+
+var mem={}, S={scr:"login",ced:"",d:null,doc:"cedula",pg:0,err:""}, tt;
+function ld(c){try{var r=localStorage.getItem("app:"+c);if(r)return JSON.parse(r);}catch(e){}return mem[c]||null;}
+function sv(){mem[S.ced]=S.d;try{localStorage.setItem("app:"+S.ced,JSON.stringify(S.d));}catch(e){toast("No se pudo guardar en este navegador.");}}
+function toast(m){var t=$("toast");t.textContent=m;t.className="show";clearTimeout(tt);tt=setTimeout(function(){t.className="";},2400);}
+function pick(cb,max){
+  var i=document.createElement("input");i.type="file";i.accept="image/*";
+  i.onchange=function(){var f=i.files[0];if(!f)return;var r=new FileReader();
+    r.onload=function(){var im=new Image();im.onload=function(){
+      var s=Math.min(1,max/Math.max(im.width,im.height)),c=document.createElement("canvas");
+      c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);
+      c.getContext("2d").drawImage(im,0,0,c.width,c.height);cb(c.toDataURL("image/jpeg",0.82));};
+      im.src=r.result;};r.readAsDataURL(f);};
+  i.click();
+}
+function go(s){S.scr=s;S.err="";render();window.scrollTo(0,0);}
+function av(cls){return '<button class="av '+(cls||"")+'" data-a="avatar" aria-label="Cambiar foto de perfil">'+(S.d.photo?'<img src="'+S.d.photo+'" alt="">':ic("user"))+'</button>';}
+function top(eb,title){
+  return '<div class="top"><div class="grow"><div class="eyebrow">'+esc(eb)+'</div><h1>'+esc(title)+'</h1></div>'
+   +'<button class="bell" data-a="bell" aria-label="Notificaciones">'+ic("bell")+'<i>1</i></button>'+av()+'</div>';
+}
+
+var V={
+login:function(){return '<div class="brand">'+esc(CFG.app)+'</div><h1 class="center">Bienvenidos</h1><br>'
+  +'<label class="field" style="margin-top:0">'+ic("user")+'<input id="ced" type="text" inputmode="numeric" maxlength="13" autocomplete="off" placeholder="Cédula" aria-label="Cédula"></label>'
+  +'<p class="err" role="alert">'+esc(S.err)+'</p>'
+  +'<button class="pill btn" data-a="login">Continuar</button>'
+  +'<p class="center muted" style="font-size:.95rem">Escribe tu cédula para entrar o crear tu perfil.</p>'
+  +'<div class="center"><button class="link" data-a="na">Olvidé mi contraseña</button> · <button class="link" data-a="na">Recuperar correo</button></div>'
+  +'<p class="center" style="margin:22px 0 0;font-weight:700">¿Aún no tienes cuenta?</p>'
+  +'<div class="center"><button class="link" style="font-size:1.3rem;font-weight:800" data-a="reg">Regístrate</button></div>';},
+reg:function(){return '<h1>Crea tu perfil</h1><p class="muted">Aún no hay un perfil con la cédula '+esc(S.ced)+'.</p>'
+  +'<div class="center" style="margin-top:18px"><button class="av big" data-a="regphoto" aria-label="Elegir foto">'+(S.tmpPhoto?'<img src="'+S.tmpPhoto+'" alt="">':ic("cam"))+'</button></div>'
+  +'<label for="nm">Nombre</label><div class="field" style="height:60px"><input id="nm" type="text" autocomplete="name" placeholder="Tu nombre"></div>'
+  +'<p class="err" role="alert">'+esc(S.err)+'</p>'
+  +'<button class="pill btn" data-a="regsave">Guardar y entrar</button>'
+  +'<button class="pill dark" style="margin-top:12px" data-a="logout">Volver</button>';},
+home:function(){var n=S.d.name.split(" ")[0];
+  return top(CFG.etiqueta,"Hola, "+n)
+  +'<div class="hero"><div class="eyebrow">Tu espacio digital</div><h2>Todos tus documentos en un solo lugar.</h2></div>'
+  +'<div class="row"><div><h2 style="font-size:1.7rem">Secciones</h2><div class="muted">Elige el servicio que necesitas.</div></div><div class="chip">'+ic("check")+'Actualizado</div></div>'
+  +'<div class="tiles"><button class="tile" data-a="open:cedula"><span>'+ic("user")+'</span>Identidad</button>'
+  +'<button class="tile" data-a="go:wallet"><span>'+ic("doc")+'</span>Documentos</button>'
+  +'<button class="tile" data-a="go:perfil"><span>'+ic("home")+'</span>Perfil</button></div>'
+  +'<h2 style="font-size:1.7rem;margin-bottom:14px">Novedades</h2>'
+  +'<button class="news" data-a="news" aria-label="Cambiar foto de novedades">'+(S.d.news?'<img src="'+S.d.news+'" alt="Novedades">':'<span>'+ic("cam")+'<br>Toca para agregar una foto</span>')+'</button>';},
+wallet:function(){var h=top("Documentos digitales del ciudadano","Wallet");
+  for(var k in CFG.docs){h+='<button class="item" data-a="open:'+k+'"><span class="ic">'+ic("doc")+'</span><span><b>'+esc(CFG.docs[k][0])+'</b><small>'+esc(CFG.docs[k][1])+'</small></span><span class="go">'+ic("right")+'</span></button>';}
+  return h;},
+doc:function(){var k=S.doc,im=S.d.docs[k]||[],src=im[S.pg];
+  return top(CFG.docs[k][1],CFG.docs[k][0].split(" ")[0])
+  +'<p class="muted" style="margin-top:-8px">'+(S.pg?"Reverso":"Frente")+' · toca la tarjeta para poner o cambiar la foto.</p>'
+  +'<button class="dc'+(src?" on":"")+'" data-a="docimg" aria-label="Foto del documento">'+(src?'<img src="'+src+'" alt="'+esc(CFG.docs[k][0])+'">':'<span>'+ic("cam")+'<br>Agregar foto</span>')+'</button>'
+  +'<div class="seg"><button data-a="pg:0" class="'+(S.pg?"hot":"")+'">'+ic("left")+'Anterior</button><button data-a="pg:1" class="'+(S.pg?"":"hot")+'">'+ic("right")+'Siguiente</button></div>'
++'<button class="pill pink" data-a="share">'+ic("share")+' Compartir '+CFG.docs[k][2]+'</button>'
++'<button class="pill dark" data-a="na">'+ic("down")+' Descargar PDF '+CFG.docs[k][2]+'</button>'
++'<button class="pill dark" data-a="go:wallet">'+ic("left")+' Regresar</button>'
++'<button class="pill dark" data-a="reload">'+ic("ext")+' Recargar '+CFG.docs[k][2]+'</button></div>';},
+perfil:function(){return '<div class="center">'+av("big")+'<h1>'+esc(S.d.name)+'</h1><p class="muted">Cédula '+esc(S.ced)+'</p></div>'
+  +'<label for="pn">Nombre</label><div class="field" style="height:60px"><input id="pn" type="text" value="'+esc(S.d.name)+'"></div>'
+  +'<label for="pb">Sobre mí</label><textarea id="pb">'+esc(S.d.bio||"")+'</textarea>'
+  +'<button class="pill btn" style="margin-top:16px" data-a="psave">Guardar cambios</button>'
+  +'<button class="pill dark" style="margin-top:12px" data-a="logout">Cerrar sesión</button>'
+  +'<button class="pill dark" style="margin-top:12px;color:#ffb4ab" data-a="wipe">Borrar mis datos</button>';},
+fav:function(){return top("Tu lista","Favoritos")+'<p class="muted">Aquí aparecerán los documentos y servicios que marques como favoritos.</p>';},
+tram:function(){return top("Pendientes","Trámites")+'<p class="muted">Aún no tienes trámites. Cuando los agregues, los verás aquí.</p>';}
+};
+var NAV=[["home","home"],["fav","star"],["wallet","wallet"],["tram","check"],["perfil","user"]];
+var NAVNAME={home:"Inicio",fav:"Favoritos",wallet:"Wallet",tram:"Trámites",perfil:"Perfil"};
+
+function render(){
+  var s=S.scr,pre=(s=="login"||s=="reg"),h=V[s==="doc"?"doc":s]();
+  if(!pre){
+    var cur=s=="doc"?"wallet":s;
+    h+='<nav aria-label="Navegación">'+NAV.map(function(n){return '<button data-a="go:'+n[0]+'" class="'+(n[0]==cur?"on":"")+'" aria-label="'+NAVNAME[n[0]]+'">'+ic(n[1])+'</button>';}).join("")+'</nav>';
+  }
+  $("app").innerHTML=h;
+}
+
+document.addEventListener("click",function(e){
+  var t=e.target.closest("[data-a]");if(!t)return;
+  var a=t.getAttribute("data-a"),p=a.split(":");
+  if(p[0]=="go"){go(p[1]);}
+  else if(p[0]=="open"){S.doc=p[1];S.pg=0;go("doc");}
+  else if(p[0]=="pg"){S.pg=+p[1];render();}
+  else if(a=="na"){toast("Esta opción aún no está disponible.");}
+  else if(a=="bell"){toast("No tienes notificaciones nuevas.");}
+  else if(a=="login"){
+    var c=($("ced").value||"").replace(/\D/g,"");
+    if(c.length<5){S.err="Escribe tu cédula completa.";render();return;}
+    S.ced=c;var d=ld(c);
+    if(d){S.d=d;if(!S.d.docs)S.d.docs={};go("home");}else{S.tmpPhoto="";go("reg");}
+  }
+  else if(a=="reg"){var v=($("ced").value||"").replace(/\D/g,"");S.err=v.length<5?"Escribe tu cédula y toca Continuar para crear tu perfil.":"";if(v.length>=5){S.ced=v;S.tmpPhoto="";go("reg");}else render();}
+  else if(a=="regphoto"){pick(function(u){S.tmpPhoto=u;var n=$("nm").value;render();$("nm").value=n;},300);}
+  else if(a=="regsave"){
+    var nm=$("nm").value.trim();
+    if(!nm){S.err="Escribe tu nombre para continuar.";render();return;}
+    S.d={name:nm,photo:S.tmpPhoto||"",bio:"",news:"",docs:{}};sv();go("home");
+  }
+  else if(a=="avatar"){pick(function(u){S.d.photo=u;sv();render();},300);}
+  else if(a=="news"){pick(function(u){S.d.news=u;sv();render();},1000);}
+  else if(a=="docimg"){pick(function(u){var k=S.doc;if(!S.d.docs[k])S.d.docs[k]=[];S.d.docs[k][S.pg]=u;sv();render();},1000);}
+  else if(a=="share"){
+    if(navigator.share){navigator.share({title:CFG.docs[S.doc][0],text:CFG.docs[S.doc][0]}).catch(function(){});}
+    else toast("Compartir no está disponible en este navegador.");
+  }
+  else if(a=="reload"){render();toast("Actualizado.");}
+  else if(a=="psave"){S.d.name=$("pn").value.trim()||S.d.name;S.d.bio=$("pb").value.trim();sv();render();toast("Cambios guardados.");}
+  else if(a=="logout"){S.d=null;S.ced="";go("login");}
+  else if(a=="wipe"){
+    if(confirm("¿Borrar todos tus datos de este celular? No se puede deshacer.")){
+      delete mem[S.ced];try{localStorage.removeItem("app:"+S.ced);}catch(x){}
+      S.d=null;S.ced="";go("login");
+    }
+  }
+});
+document.addEventListener("input",function(e){if(e.target.id=="ced")e.target.value=e.target.value.replace(/\D/g,"");});
+document.addEventListener("keydown",function(e){if(e.key=="Enter"&&e.target.id=="ced"){var b=document.querySelector('[data-a="login"]');if(b)b.click();}});
+render();
+})();
+</script>
+</body>
+</html>
