@@ -4,13 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Mi App</title>
-<meta name="theme-color" content="#2a0a5e">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" href="icon-180.png">
-<link rel="icon" href="icon-192.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap">
 <style>
 :root{--bg1:#5a00a8;--bg2:#2a0a5e;--bg3:#1a0a3a;--ink:#ffffff;--soft:#d9b8ff;--card:#150a2e;--line:#3a2468;--pink:#f3c4fb;--cream:#f5f4ec;--btn:#5a0fb0;
@@ -169,9 +162,34 @@ doc:function(){var k=S.doc,im=S.d.docs[k]||[],src=im[S.pg];
   +'<button class="dc'+(src?" on":"")+'" data-a="docimg" aria-label="Foto del documento">'+(src?'<img src="'+src+'" alt="'+esc(CFG.docs[k][0])+'">':'<span>'+ic("cam")+'<br>Agregar foto</span>')+'</button>'
   +'<div class="seg"><button data-a="pg:0" class="'+(S.pg?"hot":"")+'">'+ic("left")+'Anterior</button><button data-a="pg:1" class="'+(S.pg?"":"hot")+'">'+ic("right")+'Siguiente</button></div>'
 +'<button class="pill pink" data-a="share">'+ic("share")+' Compartir '+CFG.docs[k][2]+'</button>'
-+'<button class="pill dark" data-a="pdf">'+ic("down")+' Descargar PDF '+CFG.docs[k][2]+'</button>'
++'<button class="pill dark" data-a="na">'+ic("down")+' Descargar PDF '+CFG.docs[k][2]+'</button>'
 +'<button class="pill dark" data-a="go:wallet">'+ic("left")+' Regresar</button>'
 +'<button class="pill dark" data-a="reload">'+ic("ext")+' Recargar '+CFG.docs[k][2]+'</button></div>';},
+validar:function(){
+  return top("VERIFICACIÓN DATA593","Validar documento")
+  +'<div class="panel">'
+  +'<label>Código de verificación</label>'
+  +'<div class="field" style="height:60px">'
+  +'<input id="codigo" type="text" placeholder="Ingrese el código completo">'
+  +'</div>'
+  +'<button class="pill dark" data-a="verificar">'
+  +ic("check")+' Verificar código'
+  +'</button>'
+  +'<button class="pill dark" data-a="qr">'
+  +ic("doc")+' Escanear QR'
+  +'</button>'
+  +'</div>';},
+certificados:function(){
+  return top("DOCUMENTOS CERTIFICADOS GENERADOS","Certificados")
+  +'<div class="panel">'
+  +'<div class="chip">Sin registros</div>'
+  +'<h2 style="font-size:1.6rem">'
+  +'Aún no tiene certificados generados'
+  +'</h2>'
+  +'<p class="muted">'
+  +'Los certificados que genere aparecerán en esta sección.'
+  +'</p>'
+  +'</div>';},
 perfil:function(){return '<div class="center">'+av("big")+'<h1>'+esc(S.d.name)+'</h1><p class="muted">Cédula '+esc(S.ced)+'</p></div>'
   +'<label for="pn">Nombre</label><div class="field" style="height:60px"><input id="pn" type="text" value="'+esc(S.d.name)+'"></div>'
   +'<label for="pb">Sobre mí</label><textarea id="pb">'+esc(S.d.bio||"")+'</textarea>'
@@ -181,8 +199,8 @@ perfil:function(){return '<div class="center">'+av("big")+'<h1>'+esc(S.d.name)+'
 fav:function(){return top("Tu lista","Favoritos")+'<p class="muted">Aquí aparecerán los documentos y servicios que marques como favoritos.</p>';},
 tram:function(){return top("Pendientes","Trámites")+'<p class="muted">Aún no tienes trámites. Cuando los agregues, los verás aquí.</p>';}
 };
-var NAV=[["home","home"],["fav","star"],["wallet","wallet"],["tram","check"],["perfil","user"]];
-var NAVNAME={home:"Inicio",fav:"Favoritos",wallet:"Wallet",tram:"Trámites",perfil:"Perfil"};
+var NAV=[["home","home"],["fav","star"],["wallet","wallet"],["validar","check"],["certificados","doc"],["perfil","user"]];
+var NAVNAME={home:"Inicio",fav:"Favoritos",wallet:"Wallet",validar:"Validar",certificados:"Certificados",perfil:"Perfil"};
 
 function render(){
   var s=S.scr,pre=(s=="login"||s=="reg"),h=V[s==="doc"?"doc":s]();
@@ -217,22 +235,15 @@ document.addEventListener("click",function(e){
   else if(a=="avatar"){pick(function(u){S.d.photo=u;sv();render();},300);}
   else if(a=="news"){pick(function(u){S.d.news=u;sv();render();},1000);}
   else if(a=="docimg"){pick(function(u){var k=S.doc;if(!S.d.docs[k])S.d.docs[k]=[];S.d.docs[k][S.pg]=u;sv();render();},1000);}
+  else if(a=="verificar"){
+  toast("Verificación próximamente.");
+  }
+  else if(a=="qr"){
+  toast("Escáner QR próximamente.");
+  }
   else if(a=="share"){
     if(navigator.share){navigator.share({title:CFG.docs[S.doc][0],text:CFG.docs[S.doc][0]}).catch(function(){});}
     else toast("Compartir no está disponible en este navegador.");
-  }
-  else if(a=="pdf"){
-    var foto=S.d.docs[S.doc] && S.d.docs[S.doc][S.pg];
-
-    if(!foto){
-        toast("Primero agrega una foto.");
-        return;
-    }
-
-    var enlace=document.createElement("a");
-    enlace.href=foto;
-    enlace.download=CFG.docs[S.doc][2]+".jpg";
-    enlace.click();
   }
   else if(a=="reload"){render();toast("Actualizado.");}
   else if(a=="psave"){S.d.name=$("pn").value.trim()||S.d.name;S.d.bio=$("pb").value.trim();sv();render();toast("Cambios guardados.");}
@@ -250,9 +261,4 @@ render();
 })();
 </script>
 </body>
-<script>
-if("serviceWorker" in navigator && location.protocol.indexOf("http")===0){
-  window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});
-}
-</script>
 </html>
