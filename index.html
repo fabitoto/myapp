@@ -108,7 +108,7 @@ function ic(n){return '<svg viewBox="0 0 24 24" aria-hidden="true">'+P[n]+'</svg
 function esc(t){return String(t==null?"":t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
 function $(i){return document.getElementById(i);}
 
-var mem={}, S={scr:"login",ced:"",d:null,doc:"cedula",pg:0,err:""}, tt;
+var mem={}, S={scr:"login",ced:"",d:null,doc:"cedula",pg:0,err:"",stream:null}, tt;
 function ld(c){try{var r=localStorage.getItem("app:"+c);if(r)return JSON.parse(r);}catch(e){}return mem[c]||null;}
 function sv(){mem[S.ced]=S.d;try{localStorage.setItem("app:"+S.ced,JSON.stringify(S.d));}catch(e){toast("No se pudo guardar en este navegador.");}}
 function toast(m){var t=$("toast");t.textContent=m;t.className="show";clearTimeout(tt);tt=setTimeout(function(){t.className="";},2400);}
@@ -198,6 +198,12 @@ perfil:function(){return '<div class="center">'+av("big")+'<h1>'+esc(S.d.name)+'
   +'<button class="pill dark" style="margin-top:12px;color:#ffb4ab" data-a="wipe">Borrar mis datos</button>';},
 fav:function(){return top("Tu lista","Favoritos")+'<p class="muted">Aquí aparecerán los documentos y servicios que marques como favoritos.</p>';},
 tram:function(){return top("Pendientes","Trámites")+'<p class="muted">Aún no tienes trámites. Cuando los agregues, los verás aquí.</p>';}
+qr:function(){
+  return top("VERIFICACIÓN DATA593","Escanear QR")
+  +'<video id="qr-video" autoplay playsinline style="width:100%;border-radius:20px"></video>'
+  +'<button class="pill dark" style="margin-top:16px" data-a="closeqr">'
+  +ic("left")+' Regresar'
+  +'</button>';},
 };
 var NAV=[["home","home"],["fav","star"],["wallet","wallet"],["validar","check"],["certificados","doc"],["perfil","user"]];
 var NAVNAME={home:"Inicio",fav:"Favoritos",wallet:"Wallet",validar:"Validar",certificados:"Certificados",perfil:"Perfil"};
@@ -239,7 +245,31 @@ document.addEventListener("click",function(e){
   toast("Verificación próximamente.");
   }
   else if(a=="qr"){
-  toast("Escáner QR próximamente.");
+    go("qr");
+    setTimeout(function(){
+      navigator.mediaDevices.getUserMedia({
+        video:{facingMode:"environment"}
+      })
+      .then(function(stream){
+        var video=document.getElementById("qr-video");
+        if(video){
+          video.srcObject=stream;
+        }
+        S.stream=stream;
+      })
+      .catch(function(){
+        toast("No se pudo acceder a la cámara.");
+      });
+    },100);
+  }
+  else if(a=="closeqr"){
+    if(S.stream){
+      S.stream.getTracks().forEach(function(track){
+        track.stop();
+      });
+      S.stream=null;
+    }
+    go("validar");
   }
   else if(a=="share"){
     if(navigator.share){navigator.share({title:CFG.docs[S.doc][0],text:CFG.docs[S.doc][0]}).catch(function(){});}
