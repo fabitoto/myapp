@@ -135,6 +135,16 @@ function top(eb,title){
   return '<div class="top"><div class="grow"><div class="eyebrow">'+esc(eb)+'</div><h1>'+esc(title)+'</h1></div>'
    +'<button class="bell" data-a="bell" aria-label="Notificaciones">'+ic("bell")+'<i>1</i></button>'+av()+'</div>';
 }
+function itemPerfil(t,s,a){
+  return '<button class="item" data-a="'+a+'">'
+    +'<span class="ic">'+ic("doc")+'</span>'
+    +'<span>'
+    +'<b>'+t+'</b>'
+    +'<small>'+s+'</small>'
+    +'</span>'
+    +'<span class="go">'+ic("right")+'</span>'
+    +'</button>';
+}
 
 var V={
 login:function(){return '<div class="brand">'+esc(CFG.app)+'</div><h1 class="center">Bienvenidos</h1><br>'
@@ -197,12 +207,43 @@ certificados:function(){
   +'Los certificados que genere aparecerán en esta sección.'
   +'</p>'
   +'</div>';},
-perfil:function(){return '<div class="center">'+av("big")+'<h1>'+esc(S.d.name)+'</h1><p class="muted">Cédula '+esc(S.ced)+'</p></div>'
-  +'<label for="pn">Nombre</label><div class="field" style="height:60px"><input id="pn" type="text" value="'+esc(S.d.name)+'"></div>'
-  +'<label for="pb">Sobre mí</label><textarea id="pb">'+esc(S.d.bio||"")+'</textarea>'
-  +'<button class="pill btn" style="margin-top:16px" data-a="psave">Guardar cambios</button>'
-  +'<button class="pill dark" style="margin-top:12px" data-a="logout">Cerrar sesión</button>'
-  +'<button class="pill dark" style="margin-top:12px;color:#ffb4ab" data-a="wipe">Borrar mis datos</button>';},
+perfil:function(){
+  return top("SEGURIDAD Y CONFIGURACIÓN","Perfil")
+  +'<div class="panel" style="margin-bottom:16px">'
+  +'<div style="display:flex;gap:16px;align-items:center">'
+  +(S.d.photo
+      ?'<img src="'+S.d.photo+'" style="width:90px;height:90px;border-radius:50%;object-fit:cover">'
+      :'<div class="av big">'+ic("user")+'</div>')
+  +'<div style="flex:1">'
+  +'<h1 style="margin:0">'+esc(S.d.name)+'</h1>'
+  +'<div class="muted">Ciudadano verificado · ****'+S.ced.slice(-4)+'</div>'
+  +'<div style="margin-top:10px">'
+  +'<span style="background:#0f6b35;color:#fff;padding:8px 14px;border-radius:999px;font-weight:700">'
+  +'Cuenta DATA593 activa'
+  +'</span>'
+  +'</div>'
+  +'</div>'
+  +'</div>'
+  +'</div>'
+  +itemPerfil("Dispositivos autorizados",
+              "1 dispositivo principal registrado.",
+              "disp")
+  +itemPerfil("Ayuda y privacidad",
+              "Permisos, privacidad y acerca de DATA593.",
+              "ayuda")
+  +itemPerfil("Cambiar contraseña",
+              "Actualice su contraseña mediante el enlace seguro.",
+              "clave")
+  +itemPerfil("Aviso de tratamiento de datos",
+              "Revise la política vigente de DATA593.",
+              "datos")
+  +'<button class="pill dark" style="margin-top:14px" data-a="acceso">'
+  +'Desactivar acceso rápido'
+  +'</button>'
+  +'<button class="pill dark" style="margin-top:14px" data-a="logout">'
+  +'Cerrar sesión'
+  +'</button>';
+},
 fav:function(){return top("Tu lista","Favoritos")+'<p class="muted">Aquí aparecerán los documentos y servicios que marques como favoritos.</p>';},
 qr:function(){
   return top("VERIFICACIÓN DATA593","Escanear QR")
@@ -277,9 +318,24 @@ document.addEventListener("click",function(e){
     }
     go("validar");
   }
+  else if(a=="disp"){
+    toast("Gestión de dispositivos próximamente.");
+  }
+  else if(a=="ayuda"){
+    toast("Centro de ayuda próximamente.");
+  }
+  else if(a=="clave"){
+    toast("Cambio de contraseña próximamente.");
+  }
+  else if(a=="datos"){
+    toast("Política de datos próximamente.");
+  }
+  else if(a=="acceso"){
+    toast("Función disponible próximamente.");
+  }
   else if(a=="share"){
     if(navigator.share){navigator.share({title:CFG.docs[S.doc][0],text:CFG.docs[S.doc][0]}).catch(function(){});}
-    else toast("Compartir no está disponible en este navegador.");
+    else toast("Compartir.");
   }
   else if(a=="reload"){render();toast("Actualizado.");}
   else if(a=="psave"){S.d.name=$("pn").value.trim()||S.d.name;S.d.bio=$("pb").value.trim();sv();render();toast("Cambios guardados.");}
