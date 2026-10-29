@@ -4,6 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Mi App</title>
+<meta name="theme-color" content="#2a0a5e">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap">
 <style>
 :root{--bg1:#5a00a8;--bg2:#2a0a5e;--bg3:#1a0a3a;--ink:#ffffff;--soft:#d9b8ff;--card:#150a2e;--line:#3a2468;--pink:#f3c4fb;--cream:#f5f4ec;--btn:#5a0fb0;
@@ -290,4 +297,9 @@ render();
 })();
 </script>
 </body>
+<script>
+if("serviceWorker" in navigator && location.protocol.indexOf("http")===0){
+  window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});
+}
+</script>
 </html>
