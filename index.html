@@ -135,9 +135,9 @@ function top(eb,title){
   return '<div class="top"><div class="grow"><div class="eyebrow">'+esc(eb)+'</div><h1>'+esc(title)+'</h1></div>'
    +'<button class="bell" data-a="bell" aria-label="Notificaciones">'+ic("bell")+'<i>1</i></button>'+av()+'</div>';
 }
-function itemPerfil(t,s,a){
+function itemPerfil(t,s,a,icono){
   return '<button class="item" data-a="'+a+'">'
-    +'<span class="ic">'+ic("doc")+'</span>'
+    +'<span class="ic">'+ic(icono)+'</span>'
     +'<span>'
     +'<b>'+t+'</b>'
     +'<small>'+s+'</small>'
@@ -216,7 +216,7 @@ perfil:function(){
       :'<div class="av big">'+ic("user")+'</div>')
   +'<div style="flex:1">'
   +'<h1 style="margin:0">'+esc(S.d.name)+'</h1>'
-  +'<div class="muted">Ciudadano verificado · ****'+S.ced.slice(-4)+'</div>'
+  +'<div class="muted">Ciudadano verificado - 0998685574</div>'
   +'<div style="margin-top:10px">'
   +'<span style="background:#0f6b35;color:#fff;padding:8px 14px;border-radius:999px;font-weight:700">'
   +'Cuenta DATA593 activa'
@@ -227,16 +227,20 @@ perfil:function(){
   +'</div>'
   +itemPerfil("Dispositivos autorizados",
               "1 dispositivo principal registrado.",
-              "disp")
+              "disp",
+              "user")
   +itemPerfil("Ayuda y privacidad",
               "Permisos, privacidad y acerca de DATA593.",
-              "ayuda")
+              "ayuda",
+              "check")
   +itemPerfil("Cambiar contraseña",
               "Actualice su contraseña mediante el enlace seguro.",
-              "clave")
+              "clave",
+              "bell")
   +itemPerfil("Aviso de tratamiento de datos",
               "Revise la política vigente de DATA593.",
-              "datos")
+              "datos",
+              "doc")
   +'<button class="pill dark" style="margin-top:14px" data-a="acceso">'
   +'Desactivar acceso rápido'
   +'</button>'
